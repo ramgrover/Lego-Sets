@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lego Collection</title>
+    <link rel="stylesheet" href="/css/main.css" />
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: red;
+        }
+
+        .navbar a:hover {
+            color: #FFD700;
+        }
+
+        .menu {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+
+        .menu a {
+            margin: 0 10px;
+        }
+
+        details {
+            display: inline-block;
+        }
+
+        summary {
+            cursor: pointer;
+        }
+
+        details ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            background-color: #333;
+            right: 0;
+            display: none;
+        }
+
+        details[open] ul {
+            display: block;
+        }
+
+        details li {
+            padding: 10px;
+        }
+
+
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #FFD700;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #FFEA00;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .card img {
+            width: 100%;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background-color: #FFD700;
+            color: #333;
+        }
+
+        .btn-primary:hover {
+            background-color: #FFEA00;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <%# <div class="navbar bg-base-100">
+        <a href="/" class="text-5xl font-bold">Lego Collection</a>
+        </div> %>
+
+        <%- include('partials/navbar', { page: '' }) %>
+
+
+            <div class="hero bg-base-100">
+                <div class="hero-content text-center">
+                    <div class="menu-container">
+                        <h1 class="text-3xl font-bold" id="set-name">
+                            <%= set.name %>
+                        </h1>
+                        <p id="set-description">Below, you will find detailed information about the set: <%= set.name %>
+                        </p>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="about-image">
+
+                    <img class="w-full rounded-lg">
+                    <img src="<%= set.img_url %>" alt="image">
+
+                </div>
+                <div class="set-description">
+
+                    <ul style="color:#333"><b> Set Name:</b>
+                        <%= set.name %>
+                            <ul>
+                                <ul><b>Year Released:</b>
+                                    <%= set.year %>
+                                </ul>
+                                <ul><b>Theme:</b>
+                                    <%= set.theme %>
+                                </ul>
+                                <ul><b>Number of Parts:</b>
+                                    <%= set.num_parts %>
+                                </ul>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                      fetch("https://quotable.io/random")
+                                        .then(response => response.json())
+                                        .then(data => {
+                                          const quoteElement = document.getElementById("quote");
+                                          quoteElement.innerHTML = ` "${data.content}"<br> -  ${data.author}`;
+                                        })
+                                        .catch(error => {
+                                          console.error("Failed to fetch a quote:", error);
+                                        });
+                                    });
+                                  </script>
+                                  
+                                  <p id="quote">Quote: Loading...</p>
+
+
+                                  <a href="#" onclick="history.back(); return false;" class="btn btn-primary" style="background-color: purple; color: white;">Back</a>
+
+
+                </div>
+
+            </div>
+
+
+
+</body>
+
+</html>

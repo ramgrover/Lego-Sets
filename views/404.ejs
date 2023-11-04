@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lego Collection</title>
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: red;
+        }
+
+        .navbar a:hover {
+            color: #FFD700;
+        }
+
+        .menu {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+
+        .menu a {
+            margin: 0 10px;
+        }
+
+        details {
+            display: inline-block;
+        }
+
+        summary {
+            cursor: pointer;
+        }
+
+        details ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            background-color: #333;
+            right: 0;
+            display: none;
+        }
+
+        details[open] ul {
+            display: block;
+        }
+
+        details li {
+            padding: 10px;
+        }
+
+
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #FFD700;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #FFEA00;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .card img {
+            width: 100%;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background-color: #FFD700;
+            color: #333;
+        }
+
+        .btn-primary:hover {
+            background-color: #FFEA00;
+        }
+    </style>
+
+</head>
+
+<body>
+    <%- include('partials/navbar', { page: "" }) %>
+        <div class="hero min-h-screen"
+            style="background-image: url(https://thumbs.dreamstime.com/z/oops-sorry-i-don-t-know-portrait-confused-young-businessman-shrugging-shoulders-shows-helpless-question-gesture-oops-sorry-i-140128171.jpg); background-size: cover;">
+            <div class="hero-overlay bg-opacity-60"></div>
+            <div class="hero-content flex items-center justify-center h-full text-center text-neutral-content">
+                <div class="max-w-md">
+                    <h1 class="text-5xl font-bold text-Red"><b>404 Sorry</b></h1>
+                   <p style="color: blue; font-size: medium;"><%= message %></p> 
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

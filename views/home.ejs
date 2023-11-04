@@ -132,22 +132,8 @@
 </head>
 <body>
   <nav>
-    <div class="navbar">
-      <a href="/" class="text-5xl font-bold">Lego Collection</a>
-      <ul class="menu menu-horizontal px-1">
-      <a href="/about">About</a>
-      <li>
-        <details>
-          <summary>Theme</summary>
-          <ul class="p-2 bg-base-100 right-0">
-            <li><a href="/lego/sets?theme=technic">Technic</a></li>
-            <li><a href="/lego/sets?theme=lion knights">Lion Knights</a></li>
-            <li><a href="/lego/sets?theme=service packs">Service Packs</a></li>
-          </ul>
-        </details>
-      </li>
-      </ul>
-    </div>
+   
+    <%- include('partials/navbar', { page: "" }) %>
   </nav>
 
 
