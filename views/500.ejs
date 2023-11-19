@@ -7,7 +7,6 @@
     <title>Lego Collection</title>
     <link rel="stylesheet" href="/css/main.css" />
 
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -148,79 +147,20 @@
         }
     </style>
 
-
 </head>
 
 <body>
-    <%# <div class="navbar bg-base-100">
-        <a href="/" class="text-5xl font-bold">Lego Collection</a>
-        </div> %>
-
-        <%- include('partials/navbar', { page: '' }) %>
-
-
-            <div class="hero bg-base-100">
-                <div class="hero-content text-center">
-                    <div class="menu-container">
-                        <h1 class="text-3xl font-bold" id="set-name">
-                            <%= set.name %>
-                        </h1>
-                        <p id="set-description">Below, you will find detailed information about the set: <%= set.name %>
-                        </p>
-
-
-                    </div>
+    <%- include('partials/navbar', { page: '/500' }) %>
+        <div class="hero min-h-screen"
+            style="background-image: url(https://thumbs.dreamstime.com/z/oops-sorry-i-don-t-know-portrait-confused-young-businessman-shrugging-shoulders-shows-helpless-question-gesture-oops-sorry-i-140128171.jpg); background-size: cover;">
+            <div class="hero-overlay bg-opacity-60"></div>
+            <div class="hero-content flex items-center justify-center h-full text-center text-neutral-content">
+                <div class="max-w-md">
+                    <h1 class="text-5xl font-bold text-Red"><b>500 Sorry</b></h1>
+                   <p style="color: blue; font-size: medium;"><%= message %></p> 
                 </div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="about-image">
-
-                    <img class="w-full rounded-lg">
-                    <img src="<%= set.img_url %>" alt="image">
-
-                </div>
-                <div class="set-description">
-
-                    <ul style="color:#333"><b> Set Name:</b>
-                        <%= set.name %>
-                            <ul>
-                                <ul><b>Year Released:</b>
-                                    <%= set.year %>
-                                </ul>
-                                <ul><b>Theme:</b>
-                                    <%= set.Theme.name %>
-                                </ul>
-                                <ul><b>Number of Parts:</b>
-                                    <%= set.num_parts %>
-                                </ul>
-
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        fetch("https://quotable.io/random")
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                const quoteElement = document.getElementById("quote");
-                                                quoteElement.innerHTML = ` "${data.content}"<br> -  ${data.author}`;
-                                            })
-                                            .catch(error => {
-                                                console.error("Failed to fetch a quote:", error);
-                                            });
-                                    });
-                                </script>
-
-                                <p id="quote">Quote: Loading...</p>
-                                <br /><br />
-                                <a class="btn btn-primary btn-sm" href="/lego/editSet/<%= set.set_num %>">Edit</a>
-                                <a href="#" onclick="history.back(); return false;" class="btn btn-primary"
-                                    style="background-color: purple; color: white;">Back</a>
-
-
-                </div>
-
-            </div>
-
-
+        </div>
 
 </body>
 

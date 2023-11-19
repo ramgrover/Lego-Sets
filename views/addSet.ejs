@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lego Collection</title>
+    <link rel="stylesheet" href="/css/main.css"/>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: red;
+        }
+        .navbar a:hover {
+            color: #FFD700;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+        .menu a {
+            margin: 0 10px;
+        }
+        details {
+            display: inline-block;
+        }
+        summary {
+            cursor: pointer;
+        }
+        details ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            background-color: #333;
+            right: 0;
+            display: none;
+        }
+        details[open] ul {
+            display: block;
+        }
+        details li {
+            padding: 10px;
+        }
+      
+      
+      
+        body {
+                  font-family: Arial, sans-serif;
+                  margin: 0;
+                  padding: 0;
+                  background-color: #f0f0f0;
+              }
+              .container {
+                  max-width: 1200px;
+                  margin: 0 auto;
+                  padding: 20px;
+              }
+              .hero {
+                  background-color: #333;
+                  color: #fff;
+                  text-align: center;
+                  padding: 20px;
+              }
+              .btn {
+                  display: inline-block;
+                  padding: 10px 20px;
+                  background-color: #FFD700;
+                  color: #333;
+                  text-decoration: none;
+                  border-radius: 5px;
+                  font-weight: bold;
+              }
+              .btn:hover {
+                  background-color: #FFEA00;
+              }
+              .grid {
+                  display: grid;
+                  grid-template-columns: repeat(3, 1fr);
+                  gap: 20px;
+              }
+              .card {
+                  background-color: #fff;
+                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                  border-radius: 5px;
+                  overflow: hidden;
+              }
+              .card img {
+                  width: 100%;
+              }
+              .card-body {
+                  padding: 20px;
+              }
+              .card-title {
+                  font-size: 1.5rem;
+                  font-weight: bold;
+                  margin: 10px 0;
+              }
+              .card-actions {
+                  display: flex;
+                  justify-content: flex-end;
+                  margin-top: 10px;
+              }
+              .btn-primary {
+                  background-color: #FFD700;
+                  color: #333;
+              }
+              .btn-primary:hover {
+                  background-color: #FFEA00;
+              }
+      
+      
+      
+      </style>
+      
+
+
+</head>
+<body tabindex="-1">
+    <%- include('partials/navbar', {page: '/lego/addSet'}) %>
+    <div class="container mx-auto">
+    <div class="container mx-auto p-4">
+        <div class="hero bg-base-200 rounded-lg p-6">
+          <div class="hero-content text-center>
+            <div class="text-center" >
+              <h1 class="text-5xl font-bold">Add Set</h1>
+              <p class="py-6">Use the below form to add a new Lego Set to the collection</p>
+            </div>
+          </div>
+        </div>
+    <br />
+    <form action="/lego/addSet" method="post">
+
+
+
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 gap-y-0">
+            <div>
+              <div class="mb-6">
+                <label for="name" class="block text-gray-700 font-medium">Name</label>
+                <input type="text" id="name" name="name" required
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:border-blue-300">
+              </div>
+              <div class="mb-6">
+                <label for="year" class="block text-gray-700 font-medium">Year</label>
+                <input type="number" id="year" name="year" required
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:border-blue-300">
+              </div>
+            </div>
+            <div>
+  
+              <div class="mb-6">
+                <label for="num_parts" class="block text-gray-700 font-medium">Number of Parts</label>
+                <input type="number" id="num_parts" name="num_parts" required
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:border-blue-300">
+              </div>
+              <div class="mb-6">
+                <label for="img_url" class="block text-gray-700 font-medium">Image URL</label>
+                <input type="url" id="img_url" name="img_url" required
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:border-blue-300">
+              </div>
+            </div>
+  
+            <div>
+              <div class="mb-6">
+                <label for="theme_id" class="block text-gray-700 font-medium">Theme</label>
+                <select id="theme_id" name="theme_id" required
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:border-blue-300">
+                  
+                  <% theme.forEach(theme => { %>
+                    <option value="<%= theme.id %>"><%= theme.name %></option>
+                <% }) %>
+
+                               
+                  
+                </select>
+              </div>
+  
+              <div class="mb-6">
+                <label for="set_num" class="block text-gray-700 font-medium">Set Num</label>
+                <input type="text" id="set_num" name="set_num" required
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:border-blue-300">
+              </div>
+  
+            </div>
+          </div>
+  
+          <div class="mt-6">
+            <button type="submit" class="btn btn-primary w-full ">Add Set</button>
+          </div>
+   
+        </form>
+      </div>
+    </div>
+</body>
+</html>
