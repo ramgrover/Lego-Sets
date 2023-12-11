@@ -194,6 +194,13 @@
                                 <ul><b>Number of Parts:</b>
                                     <%= set.num_parts %>
                                 </ul>
+                                
+                                <div class="card-actions justify-end">
+                                    <% if (session && session.user) { %>
+                                      <a href="/lego/editSet/<%= set.set_num %>" class="btn btn-success">Edit Set</a>
+                                      <a href="/lego/deleteSet/<%= set.set_num %>" class="btn btn-success">Delete</a>
+                                    <% } %>
+                                  </div>
 
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {

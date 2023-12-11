@@ -13,14 +13,39 @@ LInk = https://super-moccasins-worm.cyclic.app/
 
 
 const legoData = require("./modules/legoSets");
+const authData=require("./modules/auth-service");
+const clientSessions = require("client-sessions");
 const express = require("express");
 const path = require("path");
 const app = express();
 const Sequelize = require('sequelize');
-const HTTP_PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  clientSessions({
+    cookieName: "session",
+    secret: "top_secret",
+    duration: 2 * 60 * 1000,
+    activeDuration: 60 * 1000,
+  })
+);
+
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+}); 
+
+function ensureLogin(req, res, next) {
+  if (!req.session.user) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+}
+
 app.set('view engine', 'ejs');
 
 app.get("/", (req, res) => {
@@ -39,7 +64,7 @@ app.get("/lego/sets", async (req, res) => {
         res.render("sets", { sets: sets });
       }
       else {
-        res.render('404', { message: "I'm Sorry, there are no sets with that theme (︶︹︺)" })
+        res.render('404', { message: "I'm Sorry, there are no sets with that theme" })
       }
     }
     else {
@@ -51,7 +76,7 @@ app.get("/lego/sets", async (req, res) => {
   }
 });
 
-app.get("/lego/addSet", async (req, res) => {
+app.get("/lego/addSet",ensureLogin, async (req, res) => {
   try {
     let themeData = await legoData.getAllThemes();
     res.render("addSet", { theme: themeData });
@@ -69,7 +94,7 @@ app.get("/lego/sets/:id", (req, res) => {
     );
 });
 
-app.post("/lego/addSet", async (req, res) => {
+app.post("/lego/addSet",ensureLogin, async (req, res) => {
   try {
     await legoData.addSet(req.body);
     res.redirect("/lego/sets");
@@ -78,7 +103,7 @@ app.post("/lego/addSet", async (req, res) => {
   }
 });
 
-app.get("/lego/editSet/:num", async (req, res) => {
+app.get("/lego/editSet/:num",ensureLogin, async (req, res) => {
   try {
     const getSet = await legoData.getSetByNum(req.params.num);
     const getThemes = await legoData.getAllThemes();
@@ -88,7 +113,7 @@ app.get("/lego/editSet/:num", async (req, res) => {
   }
 });
 
-app.post("/lego/editSet", async (req, res) => {
+app.post("/lego/editSet",ensureLogin, async (req, res) => {
   try {
     await legoData.editSet(req.body.set_num, req.body);
     res.redirect("/lego/sets");
@@ -97,7 +122,7 @@ app.post("/lego/editSet", async (req, res) => {
   }
 });
 
-app.get("/lego/deleteSet/:num", async (req, res) => {
+app.get("/lego/deleteSet/:num",ensureLogin, async (req, res) => {
   try {
     await legoData.deleteSet(req.params.num);
     res.redirect("/lego/sets");
@@ -106,6 +131,57 @@ app.get("/lego/deleteSet/:num", async (req, res) => {
   }
 });
 
+app.get('/login', (req, res) => {
+  const errorMessage = '';
+  res.render('login', { userName: '', errorMessage}); 
+});
+
+app.get('/register', (req, res) => {
+  console.log("GET register route: Rendering register page");
+  res.render('register', { errorMessage: '', successMessage: '' });
+});
+
+app.post("/login", (req, res) => {
+  req.body.userAgent = req.get("User-Agent");
+  authData
+    .checkUser(req.body)
+    .then((user) => {
+      req.session.user = {
+        userName: user.userName,
+        email: user.email,
+        loginHistory: user.loginHistory,
+      };
+      res.redirect("/lego/sets");
+    })
+    .catch((err) => {
+      res.render("login", { errorMessage: err, userName: req.body.userName });
+    });
+});
+
+app.post('/register', (req, res) => {
+  const userData = req.body;
+  authData.registerUser(userData)
+    .then(() => {
+      console.log("POST register route: User created successfully");
+      res.render('register', { successMessage: 'User created', errorMessage: '' });
+    })
+    .catch((err) => {
+      console.error("POST register route error:", err);
+      res.render('register', { errorMessage: err, userName: req.body.userName, successMessage: ''});
+    });
+});
+
+app.get('/logout', (req, res) => {
+  req.session.reset();
+  res.redirect('/');
+})
+
+
+app.get('/userHistory', ensureLogin, (req, res) =>{
+  res.render('userHistory');
+})
+
+
 
 app.use((req, res) => {
   res.status(404).render("404", { message: "I'm sorry, we're unable to find what you're looking for" })//sendFile(path.join(__dirname,"/views/404.html"));
@@ -113,8 +189,13 @@ app.use((req, res) => {
 
 
 // Start the server
-legoData.initialize().then(() => {
-  app.listen(HTTP_PORT, () => {
-    console.log(`Server listening on: ${HTTP_PORT}`);
+legoData.initialize()
+  .then(() => authData.initialize)
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Failed to start the server:', error);
   });
-})
